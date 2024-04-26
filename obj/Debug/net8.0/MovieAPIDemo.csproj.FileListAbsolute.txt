@@ -136,3 +136,4 @@ C:\Users\parsh\source\repos\MovieAPIDemo\MovieAPIDemo\obj\Debug\net8.0\MovieAPID
 C:\Users\parsh\source\repos\MovieAPIDemo\MovieAPIDemo\obj\Debug\net8.0\ref\MovieAPIDemo.dll
 C:\Users\parsh\source\repos\MovieAPIDemo\MovieAPIDemo\bin\Debug\net8.0\AutoMapper.dll
 C:\Users\parsh\source\repos\MovieAPIDemo\MovieAPIDemo\bin\Debug\net8.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\parsh\source\repos\MovieAPIDemo\MovieAPIDemo\obj\Debug\net8.0\MovieAPIDemo.sourcelink.json

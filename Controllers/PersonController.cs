@@ -123,5 +123,107 @@ namespace MovieAPIDemo.Controllers
                 return BadRequest(response);
             }
         }
+        [HttpPut]
+        public IActionResult Put(ActorViewModel model)
+        {  
+            BaseResponseModel response = new BaseResponseModel();
+            try
+            {
+                
+                if (ModelState.IsValid)
+                {
+                    var postedModel = _mapper.Map<Person>(model);
+                    if (model.Id<=0)
+                    {
+                        response.Status = false;
+                        response.Message = "record doesn't exist";
+                        return BadRequest(response);
+                    }
+                    var personDetail = _context.Person.Where(x=>x.Id==model.Id).AsNoTracking().FirstOrDefault();
+                    if (personDetail==null)
+                    {
+                        response.Status = false;
+                        response.Message = "Invalid";
+                        return BadRequest(response);
+                    }
+                    _context.Person.Update(personDetail);
+                    _context.SaveChanges();
+
+                    response.Status = true;
+                    response.Message = "Success";
+                    response.Data = postedModel;
+
+
+                    return Ok(response);
+                }
+                else
+                {
+                    response.Status = false;
+                    response.Message = "Invalid model";
+                    return BadRequest(response);
+                }
+            }
+            catch (Exception ex)
+            {
+
+                response.Status = false;
+                response.Message = "Something went wrong";
+                return BadRequest(response);
+            }
+        }
+
+        [HttpDelete]
+        public IActionResult Delete(int id)
+        {
+            BaseResponseModel response = new BaseResponseModel();
+            try
+            {
+                var person = _context.Person.Where(x => x.Id == id).FirstOrDefault();
+                if (person == null)
+                {
+                    response.Status = false;
+                    response.Message = "Person Does Not Exist";
+                    return BadRequest(response);
+                }
+                _context.Person.Remove(person);
+                _context.SaveChanges();
+                response.Status = true;
+                response.Message = "Deleted Successfully";
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+
+                response.Status = false;
+                response.Message = "Something went wrong";
+                return BadRequest(response);
+            }
+        }
+        [HttpGet]
+        [Route("Search/searchText")]
+        public IActionResult Get(string searchText)
+        {
+            BaseResponseModel response = new BaseResponseModel();
+            try
+            {
+                var searchedPerson = _context.Person.Where(x=>x.Name.Contains(searchText)).Select(x=> new
+                {
+                    x.Id, x.Name,
+                }).ToList();
+                response.Status = true;
+                response.Message = "Success";
+                response.Data = searchedPerson;
+
+
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+
+                response.Status = false;
+                response.Message = "Something went wrong";
+                return BadRequest(response);
+            }
+        }
     }
 }
